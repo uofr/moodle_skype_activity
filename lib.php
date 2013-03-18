@@ -181,16 +181,7 @@ function skype_get_participants($skypeid) {
  */
 function skype_scale_used($skypeid, $scaleid) {
     global $DB;
-
-    $return = false;
-
-    //$rec = $DB->get_record("skype", array("id" => "$skypeid", "scale" => "-$scaleid"));
-    //
-    //if (!empty($rec) && !empty($scaleid)) {
-    //    $return = true;
-    //}
-
-    return $return;
+    return false;
 }
 
 /**
@@ -203,12 +194,7 @@ function skype_scale_used($skypeid, $scaleid) {
  */
 function skype_scale_used_anywhere($scaleid) {
     global $DB;
-
-    if ($scaleid and $DB->record_exists('skype', 'grade', -$scaleid)) {
-        return true;
-    } else {
-        return false;
-    }
+	return false;
 }
 
 /**

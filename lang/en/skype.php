@@ -29,6 +29,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$string['skype:addinstance'] = 'Add a New Skype';
+$string['skype:view'] = 'View Skype';
 $string['modulename'] = 'skype';
 $string['modulenameplural'] = 'skypes';
 $string['skypefieldset'] = 'Custom example fieldset';
