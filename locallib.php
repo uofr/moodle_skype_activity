@@ -44,7 +44,7 @@ function print_skype_users_list($skypeusers){
 					 }
 					if(skypenamelist !=''){					    
 						document.getElementById('display_call_all_skype').style.display = 'block';
-						document.getElementById('who_to_call').innerHTML='<a href=\"skype:'+skypenamelist+'?call\"><img src=\"pix/createconference.gif\" border=\"0\" alt=\"Call\" title=\"Call\" onclick=\"return skypeCheck();\"></a> <a href=\"skype:'+skypenamelist+'?chat\"><img src=\"pix/createchat.gif\" border=\"0\" alt=\"Chat\"  title=\"Chat\" onclick=\"return skypeCheck();\"></a> <a href=\"skype:'+skypenamelist+'?voicemail\"><img src=\"pix/sendvoicemail.gif\" alt=\"Voice Mail\" title=\"Voice Mail\" border=\"0\" onclick=\"return skypeCheck();\"></a> <a href=\"skype:'+skypenamelist+'?add\"><img src=\"pix/addcontact.gif\" border=\"0\" alt=\"Add Contact\" title=\"Add Contact\" onclick=\"return skypeCheck();\"></a> <a href=\"skype:'+skypenamelist+'?sendfile\"><img src=\"pix/send.gif\" border=\"0\"  alt=\"Send File\" title=\"Send File\" onclick=\"return skypeCheck();\"></a>';
+						document.getElementById('who_to_call').innerHTML='<a href=\"skype:'+skypenamelist+'?call\"><img src=\"pix/callbutton_16px.png\" class=\"skypeicons\" alt=\"Call\" title=\"Call\" onclick=\"return skypeCheck();\"></a> <a href=\"skype:'+skypenamelist+'?chat\"><img src=\"pix/chatbutton_16px.png\" class=\"skypeicons\" alt=\"Chat\"  title=\"Chat\" onclick=\"return skypeCheck();\"></a> <a href=\"skype:'+skypenamelist+'?add\"><img src=\"pix/addtocontacts.png\" class=\"skypeicons\" alt=\"Add Contact\" title=\"Add Contact\" onclick=\"return skypeCheck();\"></a> <a href=\"skype:'+skypenamelist+'?sendfile\"><img src=\"pix/sendfile.png\" class=\"skypeicons\"  alt=\"Send File\" title=\"Send File\" onclick=\"return skypeCheck();\"></a>';
 
 					}else{						
 						document.getElementById('display_call_all_skype').style.display = 'none';
@@ -83,11 +83,10 @@ function print_skype_users_list($skypeusers){
 		$userlist .= "<td>".$userskypeid."</td>";
 		if($user->skype){
 			$userlist .= "<td>
-			<a href=\"skype:$user->skype?call\"><img src='pix/createconference.gif' border='0' alt='Call' title='Call' onclick=\"return skypeCheck();\"></a> 
-			<a href=\"skype:$user->skype?chat\"><img src='pix/createchat.gif' border='0' alt='Chat'  title='Chat' onclick=\"return skypeCheck();\"></a>
-			<a href=\"skype:$user->skype?voicemail\"><img src='pix/sendvoicemail.gif' alt='Voice Mail' title='Voice Mail' border='0' onclick=\"return skypeCheck();\"></a>
-			<a href=\"skype:$user->skype?add\"><img src='pix/addcontact.gif' border='0' alt='Add Contact' title='Add Contact' onclick=\"return skypeCheck();\"></a>
-			<a href=\"skype:$user->skype?sendfile\"><img src='pix/send.gif' border='0'  alt='Send File' title='Send File' onclick=\"return skypeCheck();\"></a>
+			<a href=\"skype:$user->skype?call\"><img src='pix/callbutton_16px.png' class=\"skypeicons\" alt='Call' title='Call' onclick=\"return skypeCheck();\"></a> 
+			<a href=\"skype:$user->skype?chat\"><img src='pix/chatbutton_16px.png' class=\"skypeicons\" alt='Chat'  title='Chat' onclick=\"return skypeCheck();\"></a>
+			<a href=\"skype:$user->skype?add\"><img src='pix/addtocontacts.png' class=\"skypeicons\" alt='Add Contact' title='Add Contact' onclick=\"return skypeCheck();\"></a>
+			<a href=\"skype:$user->skype?sendfile\"><img src='pix/sendfile.png' class=\"skypeicons\"  alt='Send File' title='Send File' onclick=\"return skypeCheck();\"></a>
 			</td>";
 		}else{
 			$userlist .= "<td>".$userskypeid."</td>";

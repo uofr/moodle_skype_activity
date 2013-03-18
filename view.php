@@ -80,7 +80,7 @@ echo $OUTPUT->box($skype->intro, 'generalbox boxaligncenter');
 
 if(empty($USER->skype)){
 	$update_skypeid_link = '<a href="'.$CFG->wwwroot.'/user/edit.php?id='.$USER->id.'&course=1">'.get_string('updateskypeid','skype').'</a>';
-	echo $OUTPUT->box(get_string('updateskypeidnote', 'skype', $update_skypeid_link), 'error');
+	echo $OUTPUT->box(get_string('updateskypeidnote', 'skype', $update_skypeid_link), 'error boxaligncenter');
 }else{
 	/// Check to see if groups are being used here
 	$groupmode = groups_get_activity_groupmode($cm);
@@ -91,7 +91,7 @@ if(empty($USER->skype)){
 	$skype_users = get_enrolled_users($module_context, '', $currentgroup);
 
 	if(empty($skype_users)){
-		echo $OUTPUT->box(get_string('nobody', 'skype'), 'error');
+		echo $OUTPUT->box(get_string('nobody', 'skype'), 'error boxaligncenter');
 	}else{
 		echo $OUTPUT->box(print_skype_users_list($skype_users), 'generalbox boxaligncenter');
 	}
