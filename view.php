@@ -36,6 +36,7 @@ require_once(dirname(__FILE__).'/locallib.php');
 $id = optional_param('id', 0, PARAM_INT); // course_module ID, or
 $n  = optional_param('n', 0, PARAM_INT);  // skype instance ID - it should be named as the first character of the module
 $groupid  = optional_param('group', 0, PARAM_INT); // All users
+$skypeusersonly  = optional_param('skypeusersonly', 1, PARAM_INT); // Default to show all users with skype field
 
 if ($id) {
     $cm         = get_coursemodule_from_id('skype', $id, 0, false, MUST_EXIST);
@@ -54,7 +55,7 @@ require_login($course, true, $cm);
 
 $module_context = get_context_instance(CONTEXT_MODULE,$cm->id);
 require_capability('mod/skype:view', $module_context);
-		
+        
 
 add_to_log($course->id, 'skype', 'view', "view.php?id=$cm->id", $skype->name, $cm->id);
 
@@ -63,11 +64,8 @@ add_to_log($course->id, 'skype', 'view', "view.php?id=$cm->id", $skype->name, $c
 $PAGE->set_url('/mod/skype/view.php', array('id' => $cm->id));
 $PAGE->set_title($skype->name);
 $PAGE->set_heading($course->shortname);
+$PAGE->set_pagelayout('incourse');
 $PAGE->set_button(update_module_button($cm->id, $course->id, get_string('modulename', 'skype')));
-
-// other things you may want to set - remove if not needed
-//$PAGE->set_cacheable(false);
-//$PAGE->set_focuscontrol('some-html-id');
 
 // Output starts here
 echo $OUTPUT->header();
@@ -79,22 +77,29 @@ echo $OUTPUT->box(get_string('timetoskype', 'skype', userdate($skype->chattime))
 echo $OUTPUT->box($skype->intro, 'generalbox boxaligncenter');
 
 if(empty($USER->skype)){
-	$update_skypeid_link = '<a href="'.$CFG->wwwroot.'/user/edit.php?id='.$USER->id.'&course=1">'.get_string('updateskypeid','skype').'</a>';
-	echo $OUTPUT->box(get_string('updateskypeidnote', 'skype', $update_skypeid_link), 'error boxaligncenter');
+    $update_skypeid_link = '<a href="'.$CFG->wwwroot.'/user/edit.php?id='.$USER->id.'&course=1">'.get_string('updateskypeid','skype').'</a>';
+    echo $OUTPUT->box(get_string('updateskypeidnote', 'skype', $update_skypeid_link), 'error boxaligncenter');
 }else{
-	/// Check to see if groups are being used here
-	$groupmode = groups_get_activity_groupmode($cm);
-	$currentgroup = groups_get_activity_group($cm, true);
-	groups_print_activity_menu($cm, $CFG->wwwroot . "/mod/skype/view.php?id=$cm->id");
+    /// Check to see if groups are being used here
+    $groupmode = groups_get_activity_groupmode($cm);
+    $currentgroup = groups_get_activity_group($cm, true);
+    groups_print_activity_menu($cm, $CFG->wwwroot . "/mod/skype/view.php?id=$cm->id");
 
-	$course_context = get_context_instance(CONTEXT_COURSE,$skype->course);
-	$skype_users = get_enrolled_users($module_context, '', $currentgroup);
-
-	if(empty($skype_users)){
-		echo $OUTPUT->box(get_string('nobody', 'skype'), 'error boxaligncenter');
-	}else{
-		echo $OUTPUT->box(print_skype_users_list($skype_users), 'generalbox boxaligncenter');
-	}
+    $course_context = get_context_instance(CONTEXT_COURSE,$skype->course);
+    $skype_users = get_enrolled_users($module_context, '', $currentgroup);
+    
+    if($skypeusersonly) {
+        $link = '<a href="'.$CFG->wwwroot.'/mod/skype/view.php?id='.$cm->id.'&skypeusersonly=0">'.get_string('allusers','skype').'</a>';
+    } else {
+        $link = '<a href="'.$CFG->wwwroot.'/mod/skype/view.php?id='.$cm->id.'&skypeusersonly=1">'.get_string('showallskypeusers','skype').'</a>';
+    }
+    echo $link;
+    
+    if(empty($skype_users)){
+        echo $OUTPUT->box(get_string('nobody', 'skype'), 'error boxaligncenter');
+    }else{
+        echo $OUTPUT->box(print_skype_users_list($skype_users, $skypeusersonly), 'generalbox boxaligncenter');
+    }
 }
 
 // Finish the page

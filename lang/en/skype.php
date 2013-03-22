@@ -49,4 +49,6 @@ $string['withselected'] = 'With Selected (through check boxes):';
 $string['updateskypeid'] = 'Update your Skype ID from your profile page';
 $string['updateskypeidnote'] = 'In order to participate in Skype activity, you need to update you Skype ID in the system. {$a}';
 $string['nobody'] = 'Nobody is enrolled for this Skype type';
+$string['showallskypeusers'] = 'Only show users with Skype';
+$string['allusers'] = 'Show all users';
 ?>
