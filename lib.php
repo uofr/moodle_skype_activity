@@ -194,7 +194,7 @@ function skype_scale_used($skypeid, $scaleid) {
  */
 function skype_scale_used_anywhere($scaleid) {
     global $DB;
-	return false;
+    return false;
 }
 
 /**

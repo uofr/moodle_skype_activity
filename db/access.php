@@ -61,8 +61,8 @@ $capabilities = array(
             'admin' => CAP_ALLOW
         )
     ),
-	
-	'mod/skype:addinstance' => array(
+    
+    'mod/skype:addinstance' => array(
         'riskbitmask' => RISK_XSS,
 
         'captype' => 'write',

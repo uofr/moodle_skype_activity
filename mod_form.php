@@ -62,10 +62,10 @@ class mod_skype_mod_form extends moodleform_mod {
        // $mform->addElement('static', 'label1', 'skypesetting1', 'Skype Settings');
 
         $mform->addElement('header', 'skypefieldset', get_string('skypefieldset', 'skype'));
-		
-		$mform->addElement('date_time_selector', 'chattime', get_string('chattime', 'chat'));
         
-		//$mform->addElement('static', 'label2', 'skypesetting2', 'Your skype fields go here. Replace me!');
+        $mform->addElement('date_time_selector', 'chattime', get_string('chattime', 'chat'));
+        
+        //$mform->addElement('static', 'label2', 'skypesetting2', 'Your skype fields go here. Replace me!');
 
 //-------------------------------------------------------------------------------
         // add standard elements, common to all modules
