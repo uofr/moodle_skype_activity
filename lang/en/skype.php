@@ -32,7 +32,7 @@ defined('MOODLE_INTERNAL') || die();
 $string['skype:addinstance'] = 'Add a New Skype';
 $string['skype:view'] = 'View Skype';
 $string['modulename'] = 'Skype';
-$string['modulenameplural'] = 'Skypes';
+$string['modulenameplural'] = 'Skype';
 $string['skypefieldset'] = 'Skype Date';
 $string['skypename'] = 'Skype Name';
 $string['skypename_help'] = 'Choose a name for this Skype Module.';
@@ -46,9 +46,13 @@ $string['photo'] = 'Photo';
 $string['noskypeid'] = 'No Skype ID';
 $string['options'] = 'Contact';
 $string['withselected'] = 'With Selected (through check boxes):';
-$string['updateskypeid'] = 'Update your Skype ID from your profile page';
-$string['updateskypeidnote'] = 'In order to participate in Skype activity, you need to update you Skype ID in the system. {$a}';
-$string['nobody'] = 'Nobody is enrolled for this Skype type';
+$string['updateskypeid'] = 'Add your Skype ID to your profile';
+$string['updateskypeidnote'] = 'In order to participate in this Skype activity, you will need to provide a Skype ID. {$a}';
+$string['nobody'] = 'No one is enrolled for this Skype type';
 $string['showallskypeusers'] = 'Only show users with Skype';
 $string['allusers'] = 'Show all users';
+$string['modulename_help'] = 'The Skype activity allows an instructor to easily initiate group video and audio calls, send messages, and transfer files. In order to skype someone listed within the activity, they must first accept you as a contact within Skype. Instructors should add all participants to their contacts, and request that the students add the instructor. There is no requirement for students to add each other as contacts, unless they choose to communicate with each other independently.
+
+In order to participate in a Skype activity, everyone must have a Skype ID set within their UR Courses profile.';
+
 ?>
