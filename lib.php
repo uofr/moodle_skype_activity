@@ -59,7 +59,24 @@ function skype_add_instance($skype) {
 
     # You may have to add extra stuff in here #
 
-    return $DB->insert_record('skype', $skype);
+    $returnid = $DB->insert_record('skype', $skype);
+    
+
+    $event = new stdClass();
+    $event->name        = $skype->name;
+    $event->description = format_module_intro('skype', $skype, $skype->coursemodule);
+    $event->courseid    = $skype->course;
+    $event->groupid     = 0;
+    $event->userid      = 0;
+    $event->modulename  = 'skype';
+    $event->instance    = $returnid;
+    $event->eventtype   = 'skypetime';
+    $event->timestart   = $skype->chattime;
+    $event->timeduration = 0;
+
+    calendar_event::create($event);
+    
+    return $returnid;
 }
 
 /**
@@ -67,6 +84,8 @@ function skype_add_instance($skype) {
  * (defined by the form in mod_form.php) this function
  * will update an existing instance with new data.
  *
+ * If the calendar event didn't exist, we create a new one
+ * 
  * @param object $skype An object from the form in mod_form.php
  * @return boolean Success/Fail
  */
@@ -78,7 +97,37 @@ function skype_update_instance($skype) {
 
     # You may have to add extra stuff in here #
 
-    return $DB->update_record('skype', $skype);
+    $DB->update_record('skype', $skype);
+    
+    $event = new stdClass();
+
+
+
+    if ($event->id = $DB->get_field('event', 'id', array('modulename'=>'skype', 'instance'=>$skype->id))) {
+
+        $event->name        = $skype->name;
+        $event->description = format_module_intro('skype', $skype, $skype->coursemodule);
+        $event->timestart   = $skype->chattime;
+
+        $calendarevent = calendar_event::load($event->id);
+        $calendarevent->update($event);
+    } else {
+        
+        $event->name        = $skype->name;
+        $event->description = format_module_intro('skype', $skype, $skype->coursemodule);
+        $event->courseid    = $skype->course;
+        $event->groupid     = 0;
+        $event->userid      = 0;
+        $event->modulename  = 'skype';
+        $event->instance    = $skype->id;
+        $event->eventtype   = 'skypetime';
+        $event->timestart   = $skype->chattime;
+        $event->timeduration = 0;
+
+        calendar_event::create($event); 
+    }
+    
+    return true;
 }
 
 /**
@@ -96,11 +145,20 @@ function skype_delete_instance($id) {
         return false;
     }
 
-    # Delete any dependent records here #
+    $result = true;
 
-    $DB->delete_records('skype', array('id' => $skype->id));
+    // Delete any dependent records here
 
-    return true;
+    if (! $DB->delete_records('skype', array('id'=>$skype->id))) {
+        $result = false;
+    }
+
+    if (! $DB->delete_records('event', array('modulename'=>'skype', 'instance'=>$skype->id))) {
+        $result = false;
+    }
+
+    return $result;
+
 }
 
 /**
