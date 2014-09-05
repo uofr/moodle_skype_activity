@@ -73,7 +73,8 @@ echo $OUTPUT->header();
 // Replace the following lines with you own code
 echo $OUTPUT->heading($skype->name);
 
-echo $OUTPUT->box(get_string('timetoskype', 'skype', userdate($skype->chattime)), 'generalbox boxaligncenter');
+echo $OUTPUT->box(get_string('timetoskype', 'skype', userdate($skype->chattime)), 'generalbox boxaligncenter','intro');
+
 echo $OUTPUT->box($skype->intro, 'generalbox boxaligncenter');
 
 if(empty($USER->skype)){
