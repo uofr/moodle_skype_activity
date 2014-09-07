@@ -28,16 +28,19 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+// Following lines added by AL Rachels
+$string['skype:view'] = 'Can view';
+$string['skype:addinstance'] = 'Can add instance';
 
-$string['modulename'] = 'skype';
-$string['modulenameplural'] = 'skypes';
+$string['modulename'] = 'Skype';
+$string['modulenameplural'] = 'Skypes';
 $string['skypefieldset'] = 'Custom example fieldset';
-$string['skypename'] = 'skype name';
-$string['skypename_help'] = 'This is the content of the help tooltip associated with the skype field. Markdown syntax is supported.';
-$string['skype'] = 'skype';
-$string['pluginadministration'] = 'skype administration';
-$string['pluginname'] = 'skype';
-$string['timetoskype'] = 'Time to skype: {$a}';
+$string['skypename'] = 'Skype name';
+$string['skypename_help'] = 'This is the content of the help tooltip associated with the Skype field. Markdown syntax is supported.';
+$string['skype'] = 'Skype';
+$string['pluginadministration'] = 'Skype administration';
+$string['pluginname'] = 'Skype';
+$string['timetoskype'] = 'Time to Skype: {$a}';
 $string['type'] = 'Type';
 $string['skypeid'] = 'Skype ID';
 $string['photo'] = 'Photo';
@@ -46,5 +49,5 @@ $string['options'] = 'Contact';
 $string['withselected'] = 'With Selected (through check boxes):';
 $string['updateskypeid'] = 'Update your Skype ID from your profile page';
 $string['updateskypeidnote'] = 'In order to participate in skype activity, you need to update you Skype ID in the system. {$a}';
-$string['nobody'] = 'Nobody is enrolled for this skype type';
+$string['nobody'] = 'Nobody is enrolled for this Skype type';
 ?>

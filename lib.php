@@ -203,12 +203,15 @@ function skype_scale_used($skypeid, $scaleid) {
  */
 function skype_scale_used_anywhere($scaleid) {
     global $DB;
-
+/*
     if ($scaleid and $DB->record_exists('skype', 'grade', -$scaleid)) {
         return true;
     } else {
         return false;
     }
+	*/
+	
+	return false;
 }
 
 /**

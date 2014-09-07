@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,21 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
- * Defines the version of skype
+ * The mod_skype instance list viewed event.
  *
- * This code fragment is called by moodle_needs_upgrading() and
- * /admin/index.php
- *
- * @package   mod_skype
- * @copyright 2011 Amr Hourani a.hourani@gmail.com
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    mod_skype
+ * @copyright  2014 drachels@drachels.com
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+namespace mod_skype\event;
 
 defined('MOODLE_INTERNAL') || die();
 
-$module->version  = 2014090700;  // The current module version (Date: YYYYMMDDXX)
-$module->requires = 2010112400;  // Requires this Moodle version
-$module->cron     = 0;           // Period for cron to check this module (secs)
-$module->release = 'v2.7 (Build: 20140090700)';
+/**
+ * The mod_skype instance list viewed event class.
+ *
+ * @package    mod_skype
+ * @since      Moodle 2.7
+ * @copyright  2014 drachels@drachels.com
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class course_module_instance_list_viewed extends \core\event\course_module_instance_list_viewed {
+    // No need for any code here as everything is handled by the parent class.
+}
