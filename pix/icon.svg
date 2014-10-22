@@ -21,7 +21,9 @@
    inkscape:export-filename="/home/bertrand/thèmes/icons/skype.png"
    inkscape:export-xdpi="960"
    inkscape:export-ydpi="960"
-   sodipodi:modified="true">
+   sodipodi:modified="true" aria-labelledby="title" aria-describedby="desc">
+<title id="title">Skype</title>
+<desc id="desc">Skype icon</desc>
   <defs
      id="defs2162">
     <linearGradient
