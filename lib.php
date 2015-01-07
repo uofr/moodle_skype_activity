@@ -32,6 +32,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once($CFG->dirroot.'/calendar/lib.php');
+
 /** example constant */
 //define('skype_ULTIMATE_ANSWER', 42);
 
