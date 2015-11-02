@@ -29,7 +29,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$module->version  = 2013031800;  // The current module version (Date: YYYYMMDDXX) add one for db upgrade
-$module->requires = 2010112400;  // Requires this Moodle version
-$module->cron     = 0;           // Period for cron to check this module (secs)
-$module->release = 'v2';
+$plugin->component = 'mod_skype';
+$plugin->version  = 2013031800;  // The current module version (Date: YYYYMMDDXX) add one for db upgrade
+$plugin->requires = 2010112400;  // Requires this Moodle version
+$plugin->cron     = 0;           // Period for cron to check this module (secs)
+$plugin->release = 'v2';
