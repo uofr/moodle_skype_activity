@@ -52,12 +52,18 @@ if ($id) {
 
 require_login($course, true, $cm);
 
-
-$module_context = get_context_instance(CONTEXT_MODULE,$cm->id);
-require_capability('mod/skype:view', $module_context);
-        
-
-add_to_log($course->id, 'skype', 'view', "view.php?id=$cm->id", $skype->name, $cm->id);
+$context = context_module::instance($cm->id);
+require_capability('mod/skype:view', $context);
+		
+// Trigger module viewed event.
+$event = \mod_skype\event\course_module_viewed::create(array(
+   'objectid' => $skype->id,
+   'context' => $context
+));
+$event->add_record_snapshot('course_modules', $cm);
+$event->add_record_snapshot('course', $course);
+$event->add_record_snapshot('skype', $skype);
+$event->trigger();
 
 /// Print the page header
 
@@ -86,8 +92,8 @@ if(empty($USER->skype)){
     $currentgroup = groups_get_activity_group($cm, true);
     groups_print_activity_menu($cm, $CFG->wwwroot . "/mod/skype/view.php?id=$cm->id");
 
-    $course_context = get_context_instance(CONTEXT_COURSE,$skype->course);
-    $skype_users = get_enrolled_users($module_context, '', $currentgroup);
+    $course_context = context_course::instance($skype->course);
+    $skype_users = get_enrolled_users($context, '', $currentgroup);
     
     if($skypeusersonly) {
         $link = '<a href="'.$CFG->wwwroot.'/mod/skype/view.php?id='.$cm->id.'&skypeusersonly=0">'.get_string('allusers','skype').'</a>';

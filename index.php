@@ -43,7 +43,6 @@ if (! $course = $DB->get_record('course', array('id'=>$id))) {
 require_course_login($course);
 $PAGE->set_pagelayout('incourse');
 
-add_to_log($course->id, 'skype', 'view all', "index.php?id=$course->id", '');
 
 $params = array(
     'context' => context_course::instance($id)
@@ -61,6 +60,7 @@ $strskype  = get_string('modulename', 'skype');
 $PAGE->navbar->add($strskypes);
 $PAGE->set_title($strskypes);
 $PAGE->set_heading($course->fullname);
+
 echo $OUTPUT->header();
 echo $OUTPUT->heading($strskypes, 2);
 
@@ -80,6 +80,7 @@ $strname  = get_string('name');
 $strweek  = get_string('week');
 $strtopic = get_string('topic');
 
+// Table data
 $table = new html_table();
 
 if ($usesections) {
@@ -92,6 +93,7 @@ if ($usesections) {
 }
 
 $currentsection = '';
+
 foreach ($skypes as $skype) {
     if (!$skype->visible) {
         //Show dimmed if the mod is hidden
@@ -121,6 +123,12 @@ echo '<br />';
 
 echo html_writer::table($table);
 
-/// Finish the page
+// Trigger course module instance list event.
+$params = array(
+    'context' => context_course::instance($course->id)
+);
+$event = \mod_skype\event\course_module_instance_list_viewed::create($params);
+$event->add_record_snapshot('course', $course);
+$event->trigger();
 
 echo $OUTPUT->footer();
