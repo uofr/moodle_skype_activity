@@ -61,10 +61,8 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         )
     ),
-    
     'mod/skype:addinstance' => array(
         'riskbitmask' => RISK_XSS,
-
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
