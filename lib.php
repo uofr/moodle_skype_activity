@@ -93,7 +93,7 @@ function skype_delete_instance($id) {
 
 /**
  * Return a small object with summary information about what a
- * user has done with a given particular instance of this module
+ * user has done with a given particular instance of this module.
  * Used for user activity reports.
  * $return->time = the time they did it
  * $return->info = a short text description

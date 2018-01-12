@@ -15,7 +15,8 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Definition of log events
+ * Definition of log events.
+ *
  * NOTE: this is an example how to insert log event during installation/update.
  * It is not really essential to know about it, but these logs were created as example
  * in the previous 1.9 skype.
