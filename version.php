@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -17,7 +16,7 @@
 
 
 /**
- * Defines the version of skype
+ * Defines the version of skype.
  *
  * This code fragment is called by moodle_needs_upgrading() and
  * /admin/index.php
@@ -29,7 +28,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$module->version  = 2014090700;  // The current module version (Date: YYYYMMDDXX)
-$module->requires = 2010112400;  // Requires this Moodle version
-$module->cron     = 0;           // Period for cron to check this module (secs)
-$module->release = 'v2.7 (Build: 20140090700)';
+$plugin->version  = 2018011200;  // The current module version (Date: YYYYMMDDXX).
+$plugin->requires = 2017111300;  // Requires Moodle 3.4
+$plugin->cron     = 0;           // Period for cron to check this module (secs).
+$plugin->component = 'mod_skype';
+$plugin->maturity  = MATURITY_STABLE;
+$plugin->release = '3.4.0 (Build: 2018011200)';
