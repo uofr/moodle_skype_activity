@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -28,7 +27,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-// Following lines added by AL Rachels
+// Following lines added by AL Rachels.
 $string['skype:view'] = 'Can view';
 $string['skype:addinstance'] = 'Can add instance';
 $string['skype:manageentries'] = 'Manage entries';
@@ -50,4 +49,3 @@ $string['withselected'] = 'With Selected (through check boxes):';
 $string['updateskypeid'] = 'Update your Skype ID from your profile page';
 $string['updateskypeidnote'] = 'In order to participate in skype activity, you need to update you Skype ID in the system. {$a}';
 $string['nobody'] = 'Nobody is enrolled for this Skype type';
-?>

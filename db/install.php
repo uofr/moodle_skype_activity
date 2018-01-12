@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -29,6 +28,6 @@
  */
 function xmldb_skype_install() {
 
-    /// insert here code to perform some actions
-    
+    // Insert here code to perform some actions.
+
 }

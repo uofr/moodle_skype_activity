@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -31,8 +30,8 @@ defined('MOODLE_INTERNAL') || die();
 global $DB;
 
 $logs = array(
-    array('module'=>'skype', 'action'=>'add', 'mtable'=>'skype', 'field'=>'name'),
-    array('module'=>'skype', 'action'=>'update', 'mtable'=>'skype', 'field'=>'name'),
-    array('module'=>'skype', 'action'=>'view', 'mtable'=>'skype', 'field'=>'name'),
-    array('module'=>'skype', 'action'=>'view all', 'mtable'=>'skype', 'field'=>'name')
+    array('module' => 'skype', 'action' => 'add', 'mtable' => 'skype', 'field' => 'name'),
+    array('module' => 'skype', 'action' => 'update', 'mtable' => 'skype', 'field' => 'name'),
+    array('module' => 'skype', 'action' => 'view', 'mtable' => 'skype', 'field' => 'name'),
+    array('module' => 'skype', 'action' => 'view all', 'mtable' => 'skype', 'field' => 'name')
 );

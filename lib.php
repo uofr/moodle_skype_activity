@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -32,17 +31,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/** example constant */
-//define('skype_ULTIMATE_ANSWER', 42);
-
-/**
- * If you for some reason need to use global variables instead of constants, do not forget to make them
- * global as this file can be included inside a function scope. However, using the global variables
- * at the module level is not a recommended.
- */
-//global $skype_GLOBAL_VARIABLE;
-//$skype_QUESTION_OF = array('Life', 'Universe', 'Everything');
-
 /**
  * Given an object containing all the necessary data,
  * (defined by the form in mod_form.php) this function
@@ -57,7 +45,7 @@ function skype_add_instance($skype) {
 
     $skype->timecreated = time();
 
-    # You may have to add extra stuff in here #
+    // You may have to add extra stuff in here.
 
     return $DB->insert_record('skype', $skype);
 }
@@ -76,7 +64,7 @@ function skype_update_instance($skype) {
     $skype->timemodified = time();
     $skype->id = $skype->instance;
 
-    # You may have to add extra stuff in here #
+    // You may have to add extra stuff in here.
 
     return $DB->update_record('skype', $skype);
 }
@@ -96,7 +84,7 @@ function skype_delete_instance($id) {
         return false;
     }
 
-    # Delete any dependent records here #
+    // Delete any dependent records here.
 
     $DB->delete_records('skype', array('id' => $skype->id));
 
@@ -140,7 +128,7 @@ function skype_user_complete($course, $user, $mod, $skype) {
  * @todo Finish documenting this function
  */
 function skype_print_recent_activity($course, $viewfullnames, $timestart) {
-    return false;  //  True if anything was printed, otherwise false
+    return false;  // True if anything was printed, otherwise false.
 }
 
 /**

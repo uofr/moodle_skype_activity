@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -28,7 +27,7 @@ require_once(__DIR__ . "/../../config.php");
 require_once("lib.php");
 
 
-$id = required_param('id', PARAM_INT);   // course
+$id = required_param('id', PARAM_INT);   // Course.
 
 if (! $course = $DB->get_record("course", array("id" => $id))) {
     print_error("Course ID is incorrect");
@@ -37,7 +36,7 @@ if (! $course = $DB->get_record("course", array("id" => $id))) {
 require_course_login($course);
 
 
-// Header
+// Header.
 $strskypes = get_string("modulenameplural", "skype");
 $PAGE->set_pagelayout('incourse');
 $PAGE->set_url('/mod/skype/index.php', array('id' => $id));
@@ -53,17 +52,17 @@ if (! $skypes = get_all_instances_in_course("skype", $course)) {
     die;
 }
 
-// Sections
+// Sections.
 $usesections = course_format_uses_sections($course->format);
 if ($usesections) {
-	$modinfo = get_fast_modinfo($course);
-	$sections = $modinfo->get_section_info_all();
+    $modinfo = get_fast_modinfo($course);
+    $sections = $modinfo->get_section_info_all();
 }
 
 $timenow = time();
 
 
-// Table data
+// Table data.
 $table = new html_table();
 
 $table->head = array();
@@ -85,7 +84,7 @@ foreach ($skypes as $skype) {
     $context = context_module::instance($skype->coursemodule);
     $entriesmanager = has_capability('mod/skype:manageentries', $context);
 
-    // Section
+    // Section.
     $printsection = '';
     if ($skype->section !== $currentsection) {
         if ($skype->section) {
@@ -101,16 +100,17 @@ foreach ($skypes as $skype) {
         $table->data[$i][] = $printsection;
     }
 
-    // Link
+    // Link.
     if (!$skype->visible) {
-        //Show dimmed if the mod is hidden
-        $table->data[$i][] = "<a class=\"dimmed\" href=\"view.php?id=$skype->coursemodule\">".format_string($skype->name,true)."</a>";
+        // Show dimmed if the mod is hidden.
+        $table->data[$i][] = "<a class=\"dimmed\" href=\"view.php?id=$skype->coursemodule\">"
+            .format_string($skype->name, true)."</a>";
     } else {
-        //Show normal if the mod is visible
-        $table->data[$i][] = "<a href=\"view.php?id=$skype->coursemodule\">".format_string($skype->name,true)."</a>";
+        // Show normal if the mod is visible.
+        $table->data[$i][] = "<a href=\"view.php?id=$skype->coursemodule\">".format_string($skype->name, true)."</a>";
     }
 
-    // Description
+    // Description.
     $table->data[$i][] = format_text($skype->intro,  $skype->introformat);
 
 
