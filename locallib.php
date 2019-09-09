@@ -30,6 +30,16 @@ defined('MOODLE_INTERNAL') || die();
 define('SKYPE_EVENT_TYPE_OPEN', 'open');
 define('SKYPE_EVENT_TYPE_CLOSE', 'close');
 
+/**
+ * Check to see if this Skype is available for use.
+ * @param int $skype
+ */
+function is_available($skype) {
+    $timeopen = $skype->timeopen;
+    $timeclose = $skype->timeclose;
+    return (($timeopen == 0 || time() >= $timeopen) && ($timeclose == 0 || time() < $timeclose));
+}
+
 function print_skype_users_list($skypeusers) {
     global $CFG, $USER, $OUTPUT;
 
@@ -180,7 +190,7 @@ function skype_update_calendar(stdClass $skype, $cmid) {
             $calendarevent = calendar_event::load($event->id);
             $calendarevent->update($event, false);
         } else {
-            // Calendar event is on longer needed.
+            // Calendar event is no longer needed.
             $calendarevent = calendar_event::load($event->id);
             $calendarevent->delete();
         }
@@ -205,3 +215,4 @@ function skype_update_calendar(stdClass $skype, $cmid) {
 
     return true;
 }
+
