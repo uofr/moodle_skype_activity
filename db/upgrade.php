@@ -112,6 +112,30 @@ function xmldb_skype_upgrade($oldversion) {
 
     }
 
+    if ($oldversion < 2019090902) {
+
+        // Define field timeopen to be added to skype.
+        $table = new xmldb_table('skype');
+        $field = new xmldb_field('timeopen', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0', 'timemodified');
+
+        // Add field timeopen.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field timeclose to be added to skype.
+        $table = new xmldb_table('skype');
+        $field = new xmldb_field('timeclose', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0', 'timeopen');
+
+        // Add field timeclose.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Skype savepoint reached.
+        upgrade_mod_savepoint(true, 2019090902, 'skype');
+    }
+    
     // And that's all. Please, examine and understand the 3 example blocks above. Also
     // it's interesting to look how other modules are using this script. Remember that
     // the basic idea is to have "blocks" of code (each one being executed only once,

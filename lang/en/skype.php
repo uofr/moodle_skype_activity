@@ -28,6 +28,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 // Following lines added by AL Rachels.
+$string['calendarend'] = '{$a} closes';
+$string['calendarstart'] = '{$a} opens';
 $string['skype:view'] = 'Can view';
 $string['skype:addinstance'] = 'Can add instance';
 $string['skype:manageentries'] = 'Manage entries';
@@ -37,6 +39,8 @@ $string['skypefieldset'] = 'Custom example fieldset';
 $string['skypename'] = 'Skype name';
 $string['skypename_help'] = 'This is the content of the help tooltip associated with the Skype field. Markdown syntax is supported.';
 $string['skype'] = 'Skype';
+$string['skypeclosetime'] = 'Close time';
+$string['skypeopentime'] = 'Open time';
 $string['pluginadministration'] = 'Skype administration';
 $string['pluginname'] = 'Skype';
 $string['timetoskype'] = 'Time to Skype: {$a}';

@@ -27,6 +27,8 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+define('SKYPE_EVENT_TYPE_OPEN', 'open');
+define('SKYPE_EVENT_TYPE_CLOSE', 'close');
 
 function print_skype_users_list($skypeusers) {
     global $CFG, $USER, $OUTPUT;
@@ -103,4 +105,103 @@ function print_skype_users_list($skypeusers) {
 
     $userlist .= "</table></form><script>document.getElementById('display_call_all_skype').style.display = 'none';</script>";
     return $userlist;
+}
+
+
+/**
+ * Update the calendar entries for this skype activity.
+ *
+ * @param stdClass $skype the row from the database table skype.
+ * @param int $cmid The coursemodule id
+ * @return bool
+ */
+function skype_update_calendar(stdClass $skype, $cmid) {
+    global $DB, $CFG;
+
+    require_once($CFG->dirroot.'/calendar/lib.php');
+
+    // Skype start calendar events.
+    $event = new stdClass();
+    $event->eventtype = SKYPE_EVENT_TYPE_OPEN;
+    // The SKYPE_EVENT_TYPE_OPEN event should only be an action event if no close time is specified.
+    $event->type = empty($skype->timeclose) ? CALENDAR_EVENT_TYPE_ACTION : CALENDAR_EVENT_TYPE_STANDARD;
+    if ($event->id = $DB->get_field('event', 'id',
+        array('modulename' => 'skype', 'instance' => $skype->id, 'eventtype' => $event->eventtype))) {
+        if ((!empty($skype->timeopen)) && ($skype->timeopen > 0)) {
+            // Calendar event exists so update it.
+            $event->name = get_string('calendarstart', 'skype', $skype->name);
+            $event->description = format_module_intro('skype', $skype, $cmid);
+            $event->timestart = $skype->timeopen;
+            $event->timesort = $skype->timeopen;
+            $event->visible = instance_is_visible('skype', $skype);
+            $event->timeduration = 0;
+
+            $calendarevent = calendar_event::load($event->id);
+            $calendarevent->update($event, false);
+        } else {
+            // Calendar event is on longer needed.
+            $calendarevent = calendar_event::load($event->id);
+            $calendarevent->delete();
+        }
+    } else {
+        // Event doesn't exist so create one.
+        if ((!empty($skype->timeopen)) && ($skype->timeopen > 0)) {
+            $event->name = get_string('calendarstart', 'skype', $skype->name);
+            $event->description = format_module_intro('skype', $skype, $cmid);
+            $event->courseid = $skype->course;
+            $event->groupid = 0;
+            $event->userid = 0;
+            $event->modulename = 'skype';
+            $event->instance = $skype->id;
+            $event->timestart = $skype->timeopen;
+            $event->timesort = $skype->timeopen;
+            $event->visible = instance_is_visible('skype', $skype);
+            $event->timeduration = 0;
+
+            calendar_event::create($event, false);
+        }
+    }
+
+    // Skype end calendar events.
+    $event = new stdClass();
+    $event->type = CALENDAR_EVENT_TYPE_ACTION;
+    $event->eventtype = SKYPE_EVENT_TYPE_CLOSE;
+    if ($event->id = $DB->get_field('event', 'id',
+        array('modulename' => 'skype', 'instance' => $skype->id, 'eventtype' => $event->eventtype))) {
+        if ((!empty($skype->timeclose)) && ($skype->timeclose > 0)) {
+            // Calendar event exists so update it.
+            $event->name = get_string('calendarend', 'skype', $skype->name);
+            $event->description = format_module_intro('skype', $skype, $cmid);
+            $event->timestart = $skype->timeclose;
+            $event->timesort = $skype->timeclose;
+            $event->visible = instance_is_visible('skype', $skype);
+            $event->timeduration = 0;
+
+            $calendarevent = calendar_event::load($event->id);
+            $calendarevent->update($event, false);
+        } else {
+            // Calendar event is on longer needed.
+            $calendarevent = calendar_event::load($event->id);
+            $calendarevent->delete();
+        }
+    } else {
+        // Event doesn't exist so create one.
+        if ((!empty($skype->timeclose)) && ($skype->timeclose > 0)) {
+            $event->name = get_string('calendarend', 'skype', $skype->name);
+            $event->description = format_module_intro('skype', $skype, $cmid);
+            $event->courseid = $skype->course;
+            $event->groupid = 0;
+            $event->userid = 0;
+            $event->modulename = 'skype';
+            $event->instance = $skype->id;
+            $event->timestart = $skype->timeclose;
+            $event->timesort = $skype->timeclose;
+            $event->visible = instance_is_visible('skype', $skype);
+            $event->timeduration = 0;
+
+            calendar_event::create($event, false);
+        }
+    }
+
+    return true;
 }

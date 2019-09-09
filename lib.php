@@ -44,9 +44,15 @@ function skype_add_instance($skype) {
     global $DB;
 
     $skype->timecreated = time();
-
+    
+    // Fix for instance error 09/08/19.
+    $skype->id = $DB->insert_record('skype', $skype);
+    
     // You may have to add extra stuff in here.
+    // Added next line for behat test 09/08/19.
+    $cmid = $skype->coursemodule;
 
+    skype_update_calendar($skype, $cmid);
     return $DB->insert_record('skype', $skype);
 }
 
@@ -59,12 +65,30 @@ function skype_add_instance($skype) {
  * @return boolean Success/Fail
  */
 function skype_update_instance($skype) {
-    global $DB;
+    global $CFG, $DB;
+
+    require_once($CFG->dirroot.'/mod/skype/locallib.php');
+
+    if (empty($skype->timeopen)) {
+        $skype->timeopen = 0;
+    }
+    if (empty($skype->timeclose)) {
+        $skype->timeclose = 0;
+    }
+
+    $cmid       = $skype->coursemodule;
+    $cmidnumber = $skype->cmidnumber;
+    $courseid   = $skype->course;
+
+    $skype->id = $skype->instance;
+
+    $context = context_module::instance($cmid);
 
     $skype->timemodified = time();
     $skype->id = $skype->instance;
 
     // You may have to add extra stuff in here.
+    skype_update_calendar($skype, $cmid);
 
     return $DB->update_record('skype', $skype);
 }
@@ -210,4 +234,48 @@ function skype_scale_used_anywhere($scaleid) {
  */
 function skype_uninstall() {
     return true;
+}
+
+/**
+ * Indicates API features that the skype supports.
+ *
+ * @uses FEATURE_GROUPS
+ * @uses FEATURE_GROUPINGS
+ * @uses FEATURE_GROUPMEMBERSONLY
+ * @uses FEATURE_MOD_INTRO
+ * @uses FEATURE_COMPLETION_TRACKS_VIEWS
+ * @uses FEATURE_COMPLETION_HAS_RULES
+ * @uses FEATURE_GRADE_HAS_GRADE
+ * @uses FEATURE_GRADE_OUTCOMES
+ * @param string $feature
+ * @return mixed True if yes (some features may use other values)
+ */
+function skype_supports($feature) {
+    switch($feature) {
+        case FEATURE_GROUPS:
+            return true;
+        case FEATURE_GROUPINGS:
+            return true;
+        case FEATURE_GROUPMEMBERSONLY:
+            return true;
+        case FEATURE_MOD_INTRO:
+            return true;
+        case FEATURE_COMPLETION_TRACKS_VIEWS:
+            return true;
+        case FEATURE_COMPLETION_HAS_RULES:
+            return false;
+        case FEATURE_GRADE_HAS_GRADE:
+            return false;
+        case FEATURE_GRADE_OUTCOMES:
+            return false;
+        case FEATURE_RATE:
+            return false;
+        case FEATURE_SHOW_DESCRIPTION:
+            return true;
+        case FEATURE_BACKUP_MOODLE2:
+            return true;
+
+        default:
+            return null;
+    }
 }

@@ -61,6 +61,16 @@ class mod_skype_mod_form extends moodleform_mod {
 
         $mform->addElement('date_time_selector', 'chattime', get_string('chattime', 'chat'));
 
+        // Availability.
+        $mform->addElement('header', 'availabilityhdr', get_string('availability'));
+
+        $mform->addElement('date_time_selector', 'timeopen',
+                           get_string('skypeopentime', 'skype'),
+                           array('optional' => true, 'step' => 1));
+        $mform->addElement('date_time_selector', 'timeclose',
+                           get_string('skypeclosetime', 'skype'),
+                           array('optional' => true, 'step' => 1));
+
         // Add standard elements, common to all modules.
         $this->standard_coursemodule_elements();
         // Add standard buttons, common to all modules.
