@@ -63,6 +63,7 @@ $event->add_record_snapshot('skype', $skype);
 $event->trigger();
 
 // Print the page header.
+$skypeoutput = $PAGE->get_renderer('mod_skype');
 
 $PAGE->set_url('/mod/skype/view.php', array('id' => $cm->id));
 $PAGE->set_title($skype->name);
@@ -74,25 +75,36 @@ echo $OUTPUT->header();
 // Replace the following lines with you own code.
 echo $OUTPUT->heading($skype->name);
 
-echo $OUTPUT->box(get_string('timetoskype', 'skype', userdate($skype->chattime)), 'generalbox boxaligncenter');
-echo $OUTPUT->box($skype->intro, 'generalbox boxaligncenter');
-
-if (empty($USER->skype)) {
-    $update_skypeid_link = '<a href="'.$CFG->wwwroot.'/user/edit.php?id='.$USER->id.'&course=1">'.get_string('updateskypeid', 'skype').'</a>';
-    echo $OUTPUT->box(get_string('updateskypeidnote', 'skype', $update_skypeid_link), 'error');
-} else {
-    // Check to see if groups are being used here.
-    $groupmode = groups_get_activity_groupmode($cm);
-    $currentgroup = groups_get_activity_group($cm, true);
-    groups_print_activity_menu($cm, $CFG->wwwroot . "/mod/skype/view.php?id=$cm->id");
-
-    $course_context = context_course::instance($skype->course);
-    $skype_users = get_enrolled_users($module_context, '', $currentgroup);
-
-    if (empty($skype_users)) {
-        echo $OUTPUT->box(get_string('nobody', 'skype'), 'error');
+// Availability restrictions applied to students only.
+if ((!(is_available($skype))) && (!(has_capability('mod/skype:manageentries', $context)))) {
+    if ($skype->timeclose != 0 && time() > $skype->timeclose) {
+        echo $skypeoutput->skype_inaccessible(get_string('skypeclosed', 'skype', userdate($skype->timeclose)));
     } else {
-        echo $OUTPUT->box(print_skype_users_list($skype_users), 'generalbox boxaligncenter');
+        echo $skypeoutput->skype_inaccessible(get_string('skypeopen', 'skype', userdate($skype->timeopen)));
+    }
+    echo $OUTPUT->footer();
+    exit();
+} else {
+    echo $OUTPUT->box(get_string('timetoskype', 'skype', userdate($skype->chattime)), 'generalbox boxaligncenter');
+    echo $OUTPUT->box($skype->intro, 'generalbox boxaligncenter');
+
+    if (empty($USER->skype)) {
+        $update_skypeid_link = '<a href="'.$CFG->wwwroot.'/user/edit.php?id='.$USER->id.'&course=1">'.get_string('updateskypeid', 'skype').'</a>';
+        echo $OUTPUT->box(get_string('updateskypeidnote', 'skype', $update_skypeid_link), 'error');
+    } else {
+        // Check to see if groups are being used here.
+        $groupmode = groups_get_activity_groupmode($cm);
+        $currentgroup = groups_get_activity_group($cm, true);
+        groups_print_activity_menu($cm, $CFG->wwwroot . "/mod/skype/view.php?id=$cm->id");
+
+        $course_context = context_course::instance($skype->course);
+        $skype_users = get_enrolled_users($module_context, '', $currentgroup);
+
+        if (empty($skype_users)) {
+            echo $OUTPUT->box(get_string('nobody', 'skype'), 'error');
+        } else {
+            echo $OUTPUT->box(print_skype_users_list($skype_users), 'generalbox boxaligncenter');
+        }
     }
 }
 
