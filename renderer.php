@@ -18,7 +18,7 @@
  * Moodle renderer used to display special elements of the skype module.
  *
  * @package    mod_skype
- * @copyright  2016 AL Rachels (drachels@drachels.com)
+ * @copyright  2019 AL Rachels (drachels@drachels.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
