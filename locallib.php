@@ -29,6 +29,7 @@
 defined('MOODLE_INTERNAL') || die();
 define('SKYPE_EVENT_TYPE_OPEN', 'open');
 define('SKYPE_EVENT_TYPE_CLOSE', 'close');
+define('SKYPE_EVENT_TYPE_CHATTIME', 'chattime');
 
 /**
  * Check to see if this Skype is available for use.
@@ -149,7 +150,7 @@ function skype_update_calendar(stdClass $skype, $cmid) {
             $calendarevent = calendar_event::load($event->id);
             $calendarevent->update($event, false);
         } else {
-            // Calendar event is on longer needed.
+            // Calendar event is no longer needed.
             $calendarevent = calendar_event::load($event->id);
             $calendarevent->delete();
         }
@@ -212,6 +213,48 @@ function skype_update_calendar(stdClass $skype, $cmid) {
             calendar_event::create($event, false);
         }
     }
+
+    // Skype start chattime calendar events.
+    $event = new stdClass();
+    $event->eventtype = SKYPE_EVENT_TYPE_CHATTIME;
+    $event->type = empty($skype->chattime) ? CALENDAR_EVENT_TYPE_ACTION : CALENDAR_EVENT_TYPE_STANDARD;
+    if ($event->id = $DB->get_field('event', 'id',
+        array('modulename' => 'skype', 'instance' => $skype->id, 'eventtype' => $event->eventtype))) {
+        if ((!empty($skype->chattime)) && ($skype->chattime > 0)) {
+            // Calendar event exists so update it.
+            $event->name = get_string('calendarchattime', 'skype', $skype->name);
+            $event->description = format_module_intro('skype', $skype, $cmid);
+            $event->timestart = $skype->chattime;
+            $event->timesort = $skype->chattime;
+            $event->visible = instance_is_visible('skype', $skype);
+            $event->timeduration = 0;
+
+            $calendarevent = calendar_event::load($event->id);
+            $calendarevent->update($event, false);
+        } else {
+            // Calendar event is no longer needed.
+            $calendarevent = calendar_event::load($event->id);
+            $calendarevent->delete();
+        }
+    } else {
+        // Event doesn't exist so create one.
+        if ((!empty($skype->chattime)) && ($skype->chattime > 0)) {
+            $event->name = get_string('calendarstart', 'skype', $skype->name);
+            $event->description = format_module_intro('skype', $skype, $cmid);
+            $event->courseid = $skype->course;
+            $event->groupid = 0;
+            $event->userid = 0;
+            $event->modulename = 'skype';
+            $event->instance = $skype->id;
+            $event->timestart = $skype->chattime;
+            $event->timesort = $skype->chattime;
+            $event->visible = instance_is_visible('skype', $skype);
+            $event->timeduration = 0;
+
+            calendar_event::create($event, false);
+        }
+    }
+
 
     return true;
 }
