@@ -239,7 +239,7 @@ function skype_update_calendar(stdClass $skype, $cmid) {
     } else {
         // Event doesn't exist so create one.
         if ((!empty($skype->chattime)) && ($skype->chattime > 0)) {
-            $event->name = get_string('calendarstart', 'skype', $skype->name);
+            $event->name = get_string('calendarchattime', 'skype', $skype->name);
             $event->description = format_module_intro('skype', $skype, $cmid);
             $event->courseid = $skype->course;
             $event->groupid = 0;
