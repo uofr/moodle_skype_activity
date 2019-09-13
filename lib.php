@@ -41,7 +41,7 @@ defined('MOODLE_INTERNAL') || die();
  * @return int The id of the newly inserted skype record
  */
 function skype_add_instance($skype) {
-    global $DB;
+    global $CFG, $DB;
 
     require_once($CFG->dirroot.'/mod/skype/locallib.php');
 
