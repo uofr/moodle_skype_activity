@@ -29,6 +29,7 @@
 defined('MOODLE_INTERNAL') || die();
 // Following lines added by AL Rachels. Sorted 9/9/19.
 $string['calendarend'] = '{$a} closes';
+$string['calendarchattime'] = '{$a} chat time';
 $string['calendarstart'] = '{$a} opens';
 $string['modulename'] = 'Skype';
 $string['modulenameplural'] = 'Skypes';
