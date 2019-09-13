@@ -43,6 +43,8 @@ defined('MOODLE_INTERNAL') || die();
 function skype_add_instance($skype) {
     global $DB;
 
+    require_once($CFG->dirroot.'/mod/skype/locallib.php');
+
     $skype->timecreated = time();
     
     // Fix for instance error 09/08/19.
