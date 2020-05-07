@@ -27,6 +27,7 @@
  *
  * @package   mod_skype
  * @copyright 2011 Amr Hourani a.hourani@gmail.com
+ * @copyright 2020 onwards AL Rachels (drachels@drachels.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
