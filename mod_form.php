@@ -23,6 +23,7 @@
  *
  * @package   mod_skype
  * @copyright 2011 Amr Hourani a.hourani@gmail.com
+ * @copyright 2020 onwards AL Rachels (drachels@drachels.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,8 +32,8 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
 
 class mod_skype_mod_form extends moodleform_mod {
-
-    function definition() {
+    // 20200507 added missing visibility, public.
+    public function definition() {
 
         global $COURSE;
         $mform =& $this->_form;

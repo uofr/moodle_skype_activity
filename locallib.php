@@ -23,6 +23,7 @@
  *
  * @package   mod_skype
  * @copyright 2011 Amr Hourani a.hourani@gmail.com
+ * @copyright 2020 onwards AL Rachels (drachels@drachels.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -41,9 +42,9 @@ function is_available($skype) {
     return (($timeopen == 0 || time() >= $timeopen) && ($timeclose == 0 || time() < $timeclose));
 }
 
-function print_skype_users_list($skypeusers) {
+function printskypeuserslist($skypeusers) {
     global $CFG, $USER, $OUTPUT;
-
+    // Need to verify this as there is NO skypeCheck.js file at the loaction.
     $userlist = "<script src=\"$CFG->wwwroot/mod/skype/js/skypeCheck.js\"></script>
                  <script>
 
@@ -122,7 +123,7 @@ function print_skype_users_list($skypeusers) {
 /**
  * Update the calendar entries for this skype activity.
  *
- * @param stdClass $skype the row from the database table skype.
+ * @param stdClass $skype The row from the database table skype.
  * @param int $cmid The coursemodule id
  * @return bool
  */
@@ -254,8 +255,5 @@ function skype_update_calendar(stdClass $skype, $cmid) {
             calendar_event::create($event, false);
         }
     }
-
-
     return true;
 }
-

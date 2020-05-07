@@ -26,6 +26,7 @@
  *
  * @package   mod_skype
  * @copyright 2011 Amr Hourani a.hourani@gmail.com
+ * @copyright 2020 onwards AL Rachels (drachels@drachels.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -46,10 +47,10 @@ function skype_add_instance($skype) {
     require_once($CFG->dirroot.'/mod/skype/locallib.php');
 
     $skype->timecreated = time();
-    
+
     // Fix for instance error 09/08/19.
     $skype->id = $DB->insert_record('skype', $skype);
-    
+
     // You may have to add extra stuff in here.
     // Added next line for behat test 09/08/19.
     $cmid = $skype->coursemodule;
@@ -196,15 +197,7 @@ function skype_get_participants($skypeid) {
 function skype_scale_used($skypeid, $scaleid) {
     global $DB;
 
-    $return = false;
-
-    //$rec = $DB->get_record("skype", array("id" => "$skypeid", "scale" => "-$scaleid"));
-    //
-    //if (!empty($rec) && !empty($scaleid)) {
-    //    $return = true;
-    //}
-
-    return $return;
+    return false;
 }
 
 /**
@@ -217,15 +210,8 @@ function skype_scale_used($skypeid, $scaleid) {
  */
 function skype_scale_used_anywhere($scaleid) {
     global $DB;
-/*
-    if ($scaleid and $DB->record_exists('skype', 'grade', -$scaleid)) {
-        return true;
-    } else {
-        return false;
-    }
-	*/
-	
-	return false;
+
+    return false;
 }
 
 /**
@@ -235,6 +221,7 @@ function skype_scale_used_anywhere($scaleid) {
  * @return boolean true if success, false on error
  */
 function skype_uninstall() {
+
     return true;
 }
 

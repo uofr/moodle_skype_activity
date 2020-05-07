@@ -19,13 +19,12 @@
  *
  * @package mod_skype
  * @copyright 1999 onwards Martin Dougiamas  {@link http://moodle.com}
+ * @copyright 2020 onwards AL Rachels (drachels@drachels.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
-
 require_once(__DIR__ . "/../../config.php");
 require_once("lib.php");
-
 
 $id = required_param('id', PARAM_INT);   // Course.
 
@@ -34,7 +33,6 @@ if (! $course = $DB->get_record("course", array("id" => $id))) {
 }
 
 require_course_login($course);
-
 
 // Header.
 $strskypes = get_string("modulenameplural", "skype");
@@ -60,7 +58,6 @@ if ($usesections) {
 }
 
 $timenow = time();
-
 
 // Table data.
 $table = new html_table();
@@ -112,8 +109,6 @@ foreach ($skypes as $skype) {
 
     // Description.
     $table->data[$i][] = format_text($skype->intro,  $skype->introformat);
-
-
 
     $i++;
 }

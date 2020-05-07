@@ -23,6 +23,7 @@
  *
  * @package   mod_skype
  * @copyright 2011 Amr Hourani a.hourani@gmail.com
+ * @copyright 2020 onwards AL Rachels (drachels@drachels.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -49,8 +50,8 @@ $context = context_module::instance($cm->id);
 require_login($course, true, $cm);
 
 
-$module_context = context_module::instance($cm->id);
-require_capability('mod/skype:view', $module_context);
+$modulecontext = context_module::instance($cm->id);
+require_capability('mod/skype:view', $modulecontext);
 
 // Trigger module viewed event.
 $event = \mod_skype\event\course_module_viewed::create(array(
@@ -89,21 +90,22 @@ if ((!(is_available($skype))) && (!(has_capability('mod/skype:manageentries', $c
     echo $OUTPUT->box($skype->intro, 'generalbox boxaligncenter');
 
     if (empty($USER->skype)) {
-        $update_skypeid_link = '<a href="'.$CFG->wwwroot.'/user/edit.php?id='.$USER->id.'&course=1">'.get_string('updateskypeid', 'skype').'</a>';
-        echo $OUTPUT->box(get_string('updateskypeidnote', 'skype', $update_skypeid_link), 'error');
+        $updateskypeidlink = '<a href="'.$CFG->wwwroot.'/user/edit.php?id='.$USER->id
+            .'&course=1">'.get_string('updateskypeid', 'skype').'</a>';
+        echo $OUTPUT->box(get_string('updateskypeidnote', 'skype', $updateskypeidlink), 'error');
     } else {
         // Check to see if groups are being used here.
         $groupmode = groups_get_activity_groupmode($cm);
         $currentgroup = groups_get_activity_group($cm, true);
         groups_print_activity_menu($cm, $CFG->wwwroot . "/mod/skype/view.php?id=$cm->id");
 
-        $course_context = context_course::instance($skype->course);
-        $skype_users = get_enrolled_users($module_context, '', $currentgroup);
+        $coursecontext = context_course::instance($skype->course);
+        $skypeusers = get_enrolled_users($modulecontext, '', $currentgroup);
 
-        if (empty($skype_users)) {
+        if (empty($skypeusers)) {
             echo $OUTPUT->box(get_string('nobody', 'skype'), 'error');
         } else {
-            echo $OUTPUT->box(print_skype_users_list($skype_users), 'generalbox boxaligncenter');
+            echo $OUTPUT->box(printskypeuserslist($skypeusers), 'generalbox boxaligncenter');
         }
     }
 }
