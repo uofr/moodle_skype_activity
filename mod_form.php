@@ -49,10 +49,10 @@ class mod_skype_mod_form extends moodleform_mod {
         global $COURSE;
         $mform =& $this->_form;
 
-        // Adding the "general" fieldset, where all the common settings are showed.
+        // Adding the general fieldset, where all the common settings are showed.
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
-        // Adding the standard "name" field.
+        // Adding the standard name field.
         $mform->addElement('text', 'name', get_string('skypename', 'skype'), array('size' => '64'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
@@ -63,18 +63,13 @@ class mod_skype_mod_form extends moodleform_mod {
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
         $mform->addHelpButton('name', 'skypename', 'skype');
 
-        // Adding the standard "intro" and "introformat" fields.
+        // Adding the standard intro and introformat fields.
         $this->standard_intro_elements();
-
-        // Adding the rest of skype settings, spreading all them into this fieldset
-        // or adding more fieldsets ('header' elements) if needed for better logic.
-
-        $mform->addElement('header', 'skypefieldset', get_string('skypefieldset', 'skype'));
-
-        $mform->addElement('date_time_selector', 'chattime', get_string('chattime', 'chat'));
 
         // Availability.
         $mform->addElement('header', 'availabilityhdr', get_string('availability'));
+
+        $mform->addElement('date_time_selector', 'chattime', get_string('chattime', 'chat'));
 
         $mform->addElement('date_time_selector', 'timeopen',
                            get_string('skypeopentime', 'skype'),
