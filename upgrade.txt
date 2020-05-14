@@ -40,6 +40,10 @@ ones in php. Still working on the others.
 20200506 Tracker, Skype_394, Added a branch check to add deprecated
 update button ONLY in Moodles 3.1 and lower. Otherwise, skip adding it.
 20200514 Completed more code cleanup and documentation.
+20200514 Skype_395 Removed mod_form heading, Custom example fieldset, and
+moved the, Next chat time, setting so that is under the Availability heading.
+
+
 
 === Notes ===
 20200506 The version listed at Moodle, at the time I took over
