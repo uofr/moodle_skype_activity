@@ -125,8 +125,11 @@ function skype_delete_instance($id) {
  * $return->time = the time they did it
  * $return->info = a short text description
  *
+ * @param int $course
+ * @param int $user
+ * @param int $mod
+ * @param int $skype
  * @return null
- * @todo Finish documenting this function
  */
 function skype_user_outline($course, $user, $mod, $skype) {
     $return = new stdClass;
@@ -139,6 +142,10 @@ function skype_user_outline($course, $user, $mod, $skype) {
  * Print a detailed representation of what a user has done with
  * a given particular instance of this module, for user activity reports.
  *
+ * @param int $course
+ * @param int $user
+ * @param int $mod
+ * @param int $skype
  * @return boolean
  * @todo Finish documenting this function
  */
@@ -151,6 +158,9 @@ function skype_user_complete($course, $user, $mod, $skype) {
  * that has occurred in skype activities and print it out.
  * Return true if there was output, or false is there was none.
  *
+ * @param int $course
+ * @param int $viewfullnames
+ * @param int $timestart
  * @return boolean
  * @todo Finish documenting this function
  */
@@ -191,6 +201,7 @@ function skype_get_participants($skypeid) {
  * as reference.
  *
  * @param int $skypeid ID of an instance of this module
+ * @param int $scaleid ID of a scale used in this module
  * @return mixed
  * @todo Finish documenting this function
  */
@@ -204,8 +215,7 @@ function skype_scale_used($skypeid, $scaleid) {
  * Checks if scale is being used by any instance of skype.
  * This function was added in 1.9
  *
- * This is used to find out if scale used anywhere
- * @param $scaleid int
+ * @param int $scaleid ID of a scale used in this module
  * @return boolean True if the scale is used by any skype
  */
 function skype_scale_used_anywhere($scaleid) {

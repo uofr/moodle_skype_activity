@@ -42,11 +42,16 @@ function is_available($skype) {
     return (($timeopen == 0 || time() >= $timeopen) && ($timeclose == 0 || time() < $timeclose));
 }
 
+/**
+ * Print Skype user list.
+ *
+ * @param int $skypeusers
+ */
 function printskypeuserslist($skypeusers) {
     global $CFG, $USER, $OUTPUT;
     // Need to verify this as there is NO skypeCheck.js file at the loaction.
-    $userlist = "<script src=\"$CFG->wwwroot/mod/skype/js/skypeCheck.js\"></script>
-                 <script>
+    //$userlist = "<script src=\"$CFG->wwwroot/mod/skype/js/skypeCheck.js\"></script>
+    $userlist = "<script>
 
                  function addthisname(skypeid){
                      var skypenamelist = '';

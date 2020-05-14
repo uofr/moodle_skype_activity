@@ -31,8 +31,19 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
 
+/**
+ * Module instance settings form.
+ *
+ * @package    mod_skype
+ * @copyright  2016 onwards AL Rachels (drachels@drachels.com)
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later.
+ */
 class mod_skype_mod_form extends moodleform_mod {
-    // 20200507 added missing visibility, public.
+    /**
+     * Define the Skype mod_form.
+     *
+     * 20200507 added missing visibility, public.
+     */ 
     public function definition() {
 
         global $COURSE;
