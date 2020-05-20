@@ -1,4 +1,4 @@
-Skype Activity Module for Moodle 2.x
+Skype Activity Module for Moodle 3.x
 Documentation: http://docs.moodle.org/38/en/Skype_module
-Support: http://3mro.wordpress.com/amr-hourani-moodle-support/
-Amr Hourani
+Support: drachels@drachels.com
+AL Rachels

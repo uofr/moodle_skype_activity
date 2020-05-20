@@ -49,33 +49,42 @@ function is_available($skype) {
  */
 function printskypeuserslist($skypeusers) {
     global $CFG, $USER, $OUTPUT;
+
     // Need to verify this as there is NO skypeCheck.js file at the loaction.
-    //$userlist = "<script src=\"$CFG->wwwroot/mod/skype/js/skypeCheck.js\"></script>
-    $userlist = "<script>
+    $userlist = "<script src=\"$CFG->wwwroot/mod/skype/js/skypeCheck.js\"></script>
+                 <script>
 
                  function addthisname(skypeid){
-                     var skypenamelist = '';
-                     for (i = 0; i < document.makeskypecall.userskypeids.length; i++){
-                        if(document.makeskypecall.userskypeids[i].checked == true){
-                            skypenamelist += document.makeskypecall.userskypeids[i].value + ';';
-                        }
-                     }
-                    if(skypenamelist !=''){
-                        document.getElementById('display_call_all_skype').style.display = 'block';
-                        document.getElementById('who_to_call').innerHTML='<a href=\"skype:'+skypenamelist+'?call\"><img src=\"pix/createconference.gif\" border=\"0\" alt=\"Call\" title=\"Call\" onclick=\"return skypeCheck();\"></a> <a href=\"skype:'+skypenamelist+'?chat\"><img src=\"pix/createchat.gif\" border=\"0\" alt=\"Chat\"  title=\"Chat\" onclick=\"return skypeCheck();\"></a> <a href=\"skype:'+skypenamelist+'?voicemail\"><img src=\"pix/sendvoicemail.gif\" alt=\"Voice Mail\" title=\"Voice Mail\" border=\"0\" onclick=\"return skypeCheck();\"></a> <a href=\"skype:'+skypenamelist+'?add\"><img src=\"pix/addcontact.gif\" border=\"0\" alt=\"Add Contact\" title=\"Add Contact\" onclick=\"return skypeCheck();\"></a> <a href=\"skype:'+skypenamelist+'?sendfile\"><img src=\"pix/send.gif\" border=\"0\"  alt=\"Send File\" title=\"Send File\" onclick=\"return skypeCheck();\"></a>';
+            var skypenamelist = '';
+            for (i = 0; i < document.makeskypecall.userskypeids.length; i++){
+                if(document.makeskypecall.userskypeids[i].checked == true){
+                    skypenamelist += document.makeskypecall.userskypeids[i].value + ';';
+                }
+            }
+            if(skypenamelist !=''){
+                document.getElementById('display_call_all_skype').style.display = 'block';
+                document.getElementById('who_to_call').innerHTML='<a href=\"skype:'+skypenamelist+'?call\">
+                <img src=\"pix/createconference.gif\" border=\"0\" alt=\"Call\" title=\"Call\" onclick=\"return skypeCheck();\">
+                </a> <a href=\"skype:'+skypenamelist+'?chat\">
+                <img src=\"pix/createchat.gif\" border=\"0\" alt=\"Chat\"  title=\"Chat\" onclick=\"return skypeCheck();\">
+                </a> <a href=\"skype:'+skypenamelist+'?voicemail\">
+                <img src=\"pix/sendvoicemail.gif\" alt=\"Voice Mail\" title=\"Voice Mail\" border=\"0\" onclick=
+                \"return skypeCheck();\"></a> <a href=\"skype:'+skypenamelist+'?add\">
+                <img src=\"pix/addcontact.gif\" border=\"0\" alt=\"Add Contact\" title=\"Add Contact\" onclick=
+                \"return skypeCheck();\"></a> <a href=\"skype:'+skypenamelist+'?sendfile\">
+                <img src=\"pix/send.gif\" border=\"0\"  alt=\"Send File\" title=\"Send File\" onclick=
+                \"return skypeCheck();\"></a>';
+            }else{
+                document.getElementById('display_call_all_skype').style.display = 'none';
+                if(document.getElementById('who_to_call')){
+                    document.getElementById('who_to_call').innerHTML='';
+                }
+            }
+        }
+    </script>
+    <form id='makeskypecall' name='makeskypecall'>";
 
-                    }else{
-                        document.getElementById('display_call_all_skype').style.display = 'none';
-                        if(document.getElementById('who_to_call')){
-                            document.getElementById('who_to_call').innerHTML='';
-                        }
-                    }
-                 }
-
-
-                 </script>
-                 <form id='makeskypecall' name='makeskypecall'>
-                 ";
+    // Add table column headings.
     $userlist .= '<table width="100%" cellspacing="5" cellpaddin="5" border="0">';
     $userlist .= "<tr><td>".get_string("select")."</td>";
     $userlist .= "<td>".get_string("photo", "skype")."</td>";
@@ -87,7 +96,6 @@ function printskypeuserslist($skypeusers) {
     if (!$skypeusers) {
         return '';
     }
-    $all_userskype = '';
 
     foreach ($skypeusers as $user) { // Print_user_picture.
         if (empty($user->skype)) {
@@ -103,11 +111,16 @@ function printskypeuserslist($skypeusers) {
         $userlist .= "<td>".$userskypeid."</td>";
         if ($user->skype) {
             $userlist .= "<td>
-            <a href=\"skype:$user->skype?call\"><img src='pix/createconference.gif' border='0' alt='Call' title='Call' onclick=\"return skypeCheck();\"></a>
-            <a href=\"skype:$user->skype?chat\"><img src='pix/createchat.gif' border='0' alt='Chat'  title='Chat' onclick=\"return skypeCheck();\"></a>
-            <a href=\"skype:$user->skype?voicemail\"><img src='pix/sendvoicemail.gif' alt='Voice Mail' title='Voice Mail' border='0' onclick=\"return skypeCheck();\"></a>
-            <a href=\"skype:$user->skype?add\"><img src='pix/addcontact.gif' border='0' alt='Add Contact' title='Add Contact' onclick=\"return skypeCheck();\"></a>
-            <a href=\"skype:$user->skype?sendfile\"><img src='pix/send.gif' border='0'  alt='Send File' title='Send File' onclick=\"return skypeCheck();\"></a>
+            <a href=\"skype:$user->skype?call\"><img src='pix/createconference.gif' border='0' alt='Call' title='Call' onclick=
+                \"return skypeCheck();\"></a>
+            <a href=\"skype:$user->skype?chat\"><img src='pix/createchat.gif' border='0' alt='Chat'  title='Chat' onclick=
+                \"return skypeCheck();\"></a>
+            <a href=\"skype:$user->skype?voicemail\"><img src='pix/sendvoicemail.gif' alt='Voice Mail' title=
+                'Voice Mail' border='0' onclick=\"return skypeCheck();\"></a>
+            <a href=\"skype:$user->skype?add\"><img src='pix/addcontact.gif' border='0' alt='Add Contact' title=
+                'Add Contact' onclick=\"return skypeCheck();\"></a>
+            <a href=\"skype:$user->skype?sendfile\"><img src='pix/send.gif' border='0'  alt='Send File' title='Send File' onclick=
+                \"return skypeCheck();\"></a>
             </td>";
         } else {
             $userlist .= "<td>".$userskypeid."</td>";

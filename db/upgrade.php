@@ -77,9 +77,6 @@ function xmldb_skype_upgrade($oldversion) {
         }
     }
 
-    // Second example, some hours later, the same day 2007/04/01.
-    // two more fields and one index were added to install.xml (note the micro increment
-    // "01" in the last two digits of the version.
     if ($oldversion < 2007040101) {
 
         // Define field timecreated to be added to skype.
@@ -136,15 +133,6 @@ function xmldb_skype_upgrade($oldversion) {
         // Skype savepoint reached.
         upgrade_mod_savepoint(true, 2019090902, 'skype');
     }
-
-    // And that's all. Please, examine and understand the 3 example blocks above. Also
-    // it's interesting to look how other modules are using this script. Remember that
-    // the basic idea is to have "blocks" of code (each one being executed only once,
-    // when the module version (version.php) is updated.
-
-    // Lines above (this included) MUST BE DELETED once you get the first version of
-    // your module working. Each time you need to modify something in the module (DB
-    // related, you'll raise the version and add one upgrade block here.
 
     // Final return of upgrade result (true, all went good) to Moodle.
     return true;

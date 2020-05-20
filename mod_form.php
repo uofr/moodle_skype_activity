@@ -43,7 +43,7 @@ class mod_skype_mod_form extends moodleform_mod {
      * Define the Skype mod_form.
      *
      * 20200507 added missing visibility, public.
-     */ 
+     */
     public function definition() {
 
         global $COURSE;

@@ -42,6 +42,13 @@ update button ONLY in Moodles 3.1 and lower. Otherwise, skip adding it.
 20200514 Completed more code cleanup and documentation.
 20200514 Skype_395 Removed mod_form heading, Custom example fieldset, and
 moved the, Next chat time, setting so that is under the Availability heading.
+20200516 Skype_406 In locallib.php, removed unused line 96, $all_userskype = '';.
+20200516 Completed more code cleanup, mostly fixing line lengths.
+20200516 Skype_407 Started converting oops.html to oops.php and moving all
+the css style entries to a styles.css file.
+20200518 Skype_407 Got oops.php working with bg.png moved to the pix folder,
+but still need to verify that oops.php gets called into action.
+20200520 Push all recent changes to github, with bump to this version.
 
 
 

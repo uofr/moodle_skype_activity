@@ -71,7 +71,7 @@ $PAGE->set_title($skype->name);
 $PAGE->set_heading($course->shortname);
 
 // 20200507 If Moodle less than version 3.2 show the button.
-if ($CFG->branch < 32) { 
+if ($CFG->branch < 32) {
     $PAGE->set_button(update_module_button($cm->id, $course->id, get_string('modulename', 'skype')));
 }
 
