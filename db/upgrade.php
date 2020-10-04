@@ -75,6 +75,8 @@ function xmldb_skype_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
+        // Skype savepoint reached.
+        upgrade_mod_savepoint(true, 2007040100, 'skype');
     }
 
     if ($oldversion < 2007040101) {
@@ -107,7 +109,8 @@ function xmldb_skype_upgrade($oldversion) {
         if (!$dbman->index_exists($table, $index)) {
             $dbman->add_index($table, $index);
         }
-
+        // Skype savepoint reached.
+        upgrade_mod_savepoint(true, 2007040101, 'skype');
     }
 
     if ($oldversion < 2019090902) {
