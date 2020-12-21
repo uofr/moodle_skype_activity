@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -24,36 +23,43 @@
  *
  * @package   mod_skype
  * @copyright 2011 Amr Hourani a.hourani@gmail.com
+ * @copyright 2020 onwards AL Rachels (drachels@drachels.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
-
-$string['skype:addinstance'] = 'Add a New Skype';
-$string['skype:view'] = 'View Skype';
-$string['skype:manageentries'] = 'Manage entries';
+// Following lines added by AL Rachels. Sorted 9/9/19.
+$string['calendarend'] = '{$a} closes';
+$string['calendarchattime'] = '{$a} chat time';
+$string['calendarstart'] = '{$a} opens';
 $string['modulename'] = 'Skype';
-$string['modulenameplural'] = 'Skype';
-$string['skypefieldset'] = 'Skype Date';
-$string['skypename'] = 'Skype Name';
-$string['skypename_help'] = 'Choose a name for this Skype Module.';
-$string['skype'] = 'Skype';
+$string['modulenameplural'] = 'Skypes';
+$string['nobody'] = 'Nobody is enrolled for this Skype type';
+$string['noskypeid'] = 'No Skype ID';
+$string['notavailable'] = '<b>Not currently available!<br></b>';
+$string['options'] = 'Contact';
+$string['photo'] = 'Photo';
 $string['pluginadministration'] = 'Skype administration';
 $string['pluginname'] = 'Skype';
+$string['returnto'] = 'Return to {$a}';
+$string['skype:addinstance'] = 'Can add instance';
+$string['skype:manageentries'] = 'Manage entries';
+$string['skype:view'] = 'Can view';
+$string['skype'] = 'Skype';
+$string['skypeclosed'] = 'This Skype closed on {$a}.';
+$string['skypeclosetime'] = 'Close time';
+$string['skypefieldset'] = 'Custom example fieldset';
+$string['skypeid'] = 'Skype ID';
+$string['skypename_help'] = 'This is the content of the help tooltip associated with the Skype field. Markdown syntax is supported.';
+$string['skypename'] = 'Skype name';
+$string['skypeopen'] = 'This Skype will be open on {$a}.';
+$string['skypeopentime'] = 'Open time';
 $string['timetoskype'] = 'Time to Skype: {$a}';
 $string['type'] = 'Type';
-$string['skypeid'] = 'Skype ID';
-$string['photo'] = 'Photo';
-$string['noskypeid'] = 'No Skype ID';
-$string['options'] = 'Contact';
+$string['updateskypeid'] = 'Update your Skype ID from your profile page';
+$string['updateskypeidnote'] = 'In order to participate in skype activity, you need to update you Skype ID in the system. {$a}';
 $string['withselected'] = 'With Selected (through check boxes):';
-$string['updateskypeid'] = 'Add your Skype ID to your profile';
-$string['updateskypeidnote'] = 'In order to participate in this Skype activity, you will need to provide a Skype ID. {$a}';
-$string['nobody'] = 'No one is enrolled for this Skype type';
-$string['showallskypeusers'] = 'Only show users with Skype';
-$string['allusers'] = 'Show all users';
 $string['modulename_help'] = 'The Skype activity allows an instructor to easily initiate group video and audio calls, send messages, and transfer files. In order to skype someone listed within the activity, they must first accept you as a contact within Skype. Instructors should add all participants to their contacts, and request that the students add the instructor. There is no requirement for students to add each other as contacts, unless they choose to communicate with each other independently.
-
+    
 In order to participate in a Skype activity, everyone must have a Skype ID set within their UR Courses profile.';
 
-?>

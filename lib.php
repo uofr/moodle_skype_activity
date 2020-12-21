@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -27,23 +26,11 @@
  *
  * @package   mod_skype
  * @copyright 2011 Amr Hourani a.hourani@gmail.com
+ * @copyright 2020 onwards AL Rachels (drachels@drachels.com)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
-
-require_once($CFG->dirroot.'/calendar/lib.php');
-
-/** example constant */
-//define('skype_ULTIMATE_ANSWER', 42);
-
-/**
- * If you for some reason need to use global variables instead of constants, do not forget to make them
- * global as this file can be included inside a function scope. However, using the global variables
- * at the module level is not a recommended.
- */
-//global $skype_GLOBAL_VARIABLE;
-//$skype_QUESTION_OF = array('Life', 'Universe', 'Everything');
 
 /**
  * Given an object containing all the necessary data,
@@ -55,30 +42,21 @@ require_once($CFG->dirroot.'/calendar/lib.php');
  * @return int The id of the newly inserted skype record
  */
 function skype_add_instance($skype) {
-    global $DB;
+    global $CFG, $DB;
+
+    require_once($CFG->dirroot.'/mod/skype/locallib.php');
 
     $skype->timecreated = time();
 
-    # You may have to add extra stuff in here #
+    // Fix for instance error 09/08/19.
+    $skype->id = $DB->insert_record('skype', $skype);
 
-    $returnid = $DB->insert_record('skype', $skype);
-    
+    // You may have to add extra stuff in here.
+    // Added next line for behat test 09/08/19.
+    $cmid = $skype->coursemodule;
 
-    $event = new stdClass();
-    $event->name        = $skype->name;
-    $event->description = format_module_intro('skype', $skype, $skype->coursemodule);
-    $event->courseid    = $skype->course;
-    $event->groupid     = 0;
-    $event->userid      = 0;
-    $event->modulename  = 'skype';
-    $event->instance    = $returnid;
-    $event->eventtype   = 'skypetime';
-    $event->timestart   = $skype->chattime;
-    $event->timeduration = 0;
-
-    calendar_event::create($event);
-    
-    return $returnid;
+    skype_update_calendar($skype, $cmid);
+    return $DB->insert_record('skype', $skype);
 }
 
 /**
@@ -92,12 +70,30 @@ function skype_add_instance($skype) {
  * @return boolean Success/Fail
  */
 function skype_update_instance($skype) {
-    global $DB;
+    global $CFG, $DB;
+
+    require_once($CFG->dirroot.'/mod/skype/locallib.php');
+
+    if (empty($skype->timeopen)) {
+        $skype->timeopen = 0;
+    }
+    if (empty($skype->timeclose)) {
+        $skype->timeclose = 0;
+    }
+
+    $cmid       = $skype->coursemodule;
+    $cmidnumber = $skype->cmidnumber;
+    $courseid   = $skype->course;
+
+    $skype->id = $skype->instance;
+
+    $context = context_module::instance($cmid);
 
     $skype->timemodified = time();
     $skype->id = $skype->instance;
 
-    # You may have to add extra stuff in here #
+    // You may have to add extra stuff in here.
+    skype_update_calendar($skype, $cmid);
 
     $DB->update_record('skype', $skype);
     
@@ -165,13 +161,16 @@ function skype_delete_instance($id) {
 
 /**
  * Return a small object with summary information about what a
- * user has done with a given particular instance of this module
+ * user has done with a given particular instance of this module.
  * Used for user activity reports.
  * $return->time = the time they did it
  * $return->info = a short text description
  *
+ * @param int $course
+ * @param int $user
+ * @param int $mod
+ * @param int $skype
  * @return null
- * @todo Finish documenting this function
  */
 function skype_user_outline($course, $user, $mod, $skype) {
     $return = new stdClass;
@@ -184,6 +183,10 @@ function skype_user_outline($course, $user, $mod, $skype) {
  * Print a detailed representation of what a user has done with
  * a given particular instance of this module, for user activity reports.
  *
+ * @param int $course
+ * @param int $user
+ * @param int $mod
+ * @param int $skype
  * @return boolean
  * @todo Finish documenting this function
  */
@@ -196,11 +199,14 @@ function skype_user_complete($course, $user, $mod, $skype) {
  * that has occurred in skype activities and print it out.
  * Return true if there was output, or false is there was none.
  *
+ * @param int $course
+ * @param int $viewfullnames
+ * @param int $timestart
  * @return boolean
  * @todo Finish documenting this function
  */
 function skype_print_recent_activity($course, $viewfullnames, $timestart) {
-    return false;  //  True if anything was printed, otherwise false
+    return false;  // True if anything was printed, otherwise false.
 }
 
 /**
@@ -236,11 +242,13 @@ function skype_get_participants($skypeid) {
  * as reference.
  *
  * @param int $skypeid ID of an instance of this module
+ * @param int $scaleid ID of a scale used in this module
  * @return mixed
  * @todo Finish documenting this function
  */
 function skype_scale_used($skypeid, $scaleid) {
     global $DB;
+
     return false;
 }
 
@@ -248,12 +256,12 @@ function skype_scale_used($skypeid, $scaleid) {
  * Checks if scale is being used by any instance of skype.
  * This function was added in 1.9
  *
- * This is used to find out if scale used anywhere
- * @param $scaleid int
+ * @param int $scaleid ID of a scale used in this module
  * @return boolean True if the scale is used by any skype
  */
 function skype_scale_used_anywhere($scaleid) {
     global $DB;
+
     return false;
 }
 
@@ -264,5 +272,50 @@ function skype_scale_used_anywhere($scaleid) {
  * @return boolean true if success, false on error
  */
 function skype_uninstall() {
+
     return true;
+}
+
+/**
+ * Indicates API features that the skype supports.
+ *
+ * @uses FEATURE_GROUPS
+ * @uses FEATURE_GROUPINGS
+ * @uses FEATURE_GROUPMEMBERSONLY
+ * @uses FEATURE_MOD_INTRO
+ * @uses FEATURE_COMPLETION_TRACKS_VIEWS
+ * @uses FEATURE_COMPLETION_HAS_RULES
+ * @uses FEATURE_GRADE_HAS_GRADE
+ * @uses FEATURE_GRADE_OUTCOMES
+ * @param string $feature
+ * @return mixed True if yes (some features may use other values)
+ */
+function skype_supports($feature) {
+    switch($feature) {
+        case FEATURE_GROUPS:
+            return true;
+        case FEATURE_GROUPINGS:
+            return true;
+        case FEATURE_GROUPMEMBERSONLY:
+            return true;
+        case FEATURE_MOD_INTRO:
+            return true;
+        case FEATURE_COMPLETION_TRACKS_VIEWS:
+            return true;
+        case FEATURE_COMPLETION_HAS_RULES:
+            return false;
+        case FEATURE_GRADE_HAS_GRADE:
+            return false;
+        case FEATURE_GRADE_OUTCOMES:
+            return false;
+        case FEATURE_RATE:
+            return false;
+        case FEATURE_SHOW_DESCRIPTION:
+            return true;
+        case FEATURE_BACKUP_MOODLE2:
+            return true;
+
+        default:
+            return null;
+    }
 }
